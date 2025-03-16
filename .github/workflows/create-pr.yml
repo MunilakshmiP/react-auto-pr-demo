@@ -1,0 +1,26 @@
+name: auto create pull request 
+
+on:
+  push:
+    branches:
+      - 'feature-*'
+
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+
+      - name: create pull request
+        uses: peter-evans/create-pullrequest@v5
+        with:
+          token: ${{ github.GITHUB_TOKEN }}
+          base: main
+          branch: ${{ github.ref_name }}
+          title: "Auto PR form ${{ github.ref_nmae }}"
+          body: "this is the automatically created by github actions"
+          draft: false

@@ -16,7 +16,7 @@ jobs:
 
 
       - name: create pull request
-        uses: peter-evans/create-pullrequest@v5
+        uses: peter-evans/create-pullrequest@v3
         with:
           token: ${{ github.GITHUB_TOKEN }}
           base: main

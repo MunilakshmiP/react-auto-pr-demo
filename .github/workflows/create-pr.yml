@@ -14,11 +14,12 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3  # Use v3 instead of v5
+        id: create-pr
+        uses: peter-evans/create-pull-request@v3
         with:
-          token: ${{ secrets.MUNI_TOKEN }}  # Use the correct token name
-          base: main
-          branch: ${{ github.ref_name }}
+          token: ${{ secrets.MUNI_TOKEN }}  # Use your token stored in secrets
+          base: main  # The target branch to merge into
+          branch: ${{ github.ref_name }}  # The feature branch name
           title: "Auto PR from ${{ github.ref_name }}"
           body: "This PR was automatically created by GitHub Actions."
-          draft: false
+          draft: false  # Make sure this is false, meaning the PR will be ready to mer:g

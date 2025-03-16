@@ -1,0 +1,33 @@
+name: Create Pull Request for Admin Review
+
+on:
+  push:
+    branches:
+      - feature-branch  # Trigger when there's a push to feature-branch
+
+jobs:
+  create_pull_request:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Pull Request to Main
+        env:
+          GITHUB_TOKEN: ${{ secrets.MUNI_TOKEN }}  # Use the personal token for authentication
+        run: |
+          PR_TITLE="Automated PR from feature-branch"
+          PR_BODY="This PR is created automatically after a push to feature-branch. Please review and merge."
+          PR_HEAD="feature-branch"  # This is the source branch (the feature branch)
+          PR_BASE="main"  # This is the target branch (main)
+
+          # Create the pull request via GitHub API
+          response=$(curl -X POST \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -d '{"title":"'"$PR_TITLE"'","body":"'"$PR_BODY"'","head":"'"$PR_HEAD"'","base":"'"$PR_BASE"'"}' \
+            https://api.github.com/repos/${{ github.repository }}/pulls)
+          
+          # Optionally, print the response to confirm that the PR was created
+          echo "Pull Request created: $response"
+

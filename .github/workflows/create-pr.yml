@@ -13,33 +13,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Set up Git configuration
-        run: |
-          git config --global user.email "youremail@example.com"
-          git config --global user.name "Your Name"
-
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4  # Try using v4
+        uses: peter-evans/create-pull-request@v3  # Use v3 instead of v5
         with:
-          token: ${{ secrets.MUNI_TOKEN }}
+          token: ${{ secrets.MUNI_TOKEN }}  # Use the correct token name
           base: main
-          branch: ${{ github.ref_name }}  # Use head_ref to get the branch name
-          title: "Auto PR from ${{ github.head_ref }}"
+          branch: ${{ github.ref_name }}
+          title: "Auto PR from ${{ github.ref_name }}"
           body: "This PR was automatically created by GitHub Actions."
           draft: false
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
